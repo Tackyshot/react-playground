@@ -1,0 +1,13 @@
+{
+  "method": ["GET", "POST"],
+  "path": "/",
+  "data": {
+    "fruit": [
+      "banana",
+      "apple",
+      "kiwi",
+      "pineapple",
+      "pear"
+    ]
+  }
+}
