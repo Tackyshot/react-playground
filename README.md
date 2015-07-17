@@ -7,11 +7,11 @@ This app does two hings:
 ``` npm install ```
 
 ***Step 2)
-``` npm build ```
+``` npm run build ```
 
 ***Step 3)
 - open a second terminal and then run :
-  - ``` npm run ```
+  - ``` npm run server```
   
   
 ***To create a new route:
