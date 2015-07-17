@@ -47,6 +47,38 @@ exports.Server = function(next) {
 
     });
 
+    Server.views({
+        engines: {
+            'html': {
+                module: require('handlebars'),
+                compileMode: 'sync' // engine specific
+            }
+        },
+        path: __dirname + "/templates"
+    });
+
+
+    Server.route({
+        method: ["GET", "POST"],
+        path: '/',
+        handler: function(request, reply){
+
+            reply.view('index.html');
+
+        }
+    });
+
+    Server.route({
+        method: ["GET", "POST"],
+        path: '/resource/{type}/{file}',
+        handler: function(request, reply){
+
+            var file = fs.readFileSync(__dirname + "/sources/" + request.params.type + "/" + request.params.file);
+
+            return reply(file);
+
+        }
+    });
 
     routes.forEach(function(route){
 

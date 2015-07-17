@@ -1,6 +1,6 @@
 {
   "method": ["GET", "POST"],
-  "path": "/",
+  "path": "/api",
   "data": {
     "fruit": [
       "banana",

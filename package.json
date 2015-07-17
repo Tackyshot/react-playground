@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack -w",
-    "run" : "node app.js"
+    "run": "node app.js"
   },
   "repository": {
     "type": "git",
@@ -21,6 +21,7 @@
   "dependencies": {
     "biff": "^0.2.0",
     "confidence": "^1.1.0",
+    "handlebars": "^3.0.3",
     "hapi": "^8.8.0",
     "react": "^0.13.3",
     "react-router": "^0.13.3",
