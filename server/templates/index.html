@@ -1,11 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nurture App</title>
+    <link rel="stylesheet" href="/src/css/foundation.min.css" />
+    <link rel="stylesheet" href="/src/css/custom.css" />
+    <script src="/src/js/modernizr.js"></script>
 </head>
 <body>
     <div id="App"></div>
-    <script type="text/javascript" src="/resource/js/bundle.js"></script>
+    <script src="/src/js/jquery.js"></script>
+    <script src="/src/js/foundation.min.js"></script>
+    <script src="/src/js/foundation.topbar.js"></script>
+    <script>
+        Foundation.global.namespace = '';
+        $(document).foundation();
+    </script>
+    <script type="text/javascript" src="/src/js/bundle.js"></script>
 </body>
 </html>

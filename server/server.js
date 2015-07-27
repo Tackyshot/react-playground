@@ -70,12 +70,11 @@ exports.Server = function(next) {
 
     Server.route({
         method: ["GET", "POST"],
-        path: '/resource/{type}/{file}',
+        path: '/src/{type}/{file}',
         handler: function(request, reply){
 
-            var file = fs.readFileSync(__dirname + "/sources/" + request.params.type + "/" + request.params.file);
-
-            return reply(file);
+            var path = __dirname + "/src/" + request.params.type + "/" + request.params.file;
+            return reply.file(path);
 
         }
     });
