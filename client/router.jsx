@@ -2,6 +2,7 @@ var React = require('react'),
     Router = require('react-router'),
     App = require('./components/app.jsx'),
     Home = require('./components/home.jsx'),
+    ConsentForm = require('./components/consentForm.jsx'),
     FruitActions = require('./actions/fruit-actions.jsx'),
     request = require('superagent');
 
@@ -12,6 +13,7 @@ var Route = Router.Route,
 var routes = (
     <Route handler={App} path='/'>
         <DefaultRoute name="home" handler={Home} />
+        <Route name="consent-form" handler={ConsentForm} />
     </Route>
 );
 
