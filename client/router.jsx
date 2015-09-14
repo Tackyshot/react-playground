@@ -1,9 +1,11 @@
-var React = require('react'),
-    Container = require('./components/container.jsx'),
-    request = require('superagent');
+//dependencies
+import React        from 'react';
+import request      from 'superagent';
 
+//view handlers
+import Container    from './components/ToDoList/ToDoApp.jsx';
 
-module.exports = {
+export default {
     run: function() {
 
         request

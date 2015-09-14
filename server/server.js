@@ -1,3 +1,4 @@
+"use strict";
 /*
  * name: server.js
  * version: 0.0.1
@@ -10,114 +11,115 @@
  *
  */
 
-var path = require('path'),
-    hapi = require('hapi'),
-    fs = require('fs'),
-    exports = {};
+const   path = require('path'),
+        hapi = require('hapi'),
+        fs = require('fs');
 
 //set Exports
-exports.Server = function(next) {
+class Server {
 
-    //create server.
-    var Server = new hapi.Server(),
-        Routes = fs.readdirSync(__dirname +"/routes"),
-        routes = [];
+    constructor(){
+        this.server = new hapi.Server;
+        const server = this.server,
+            Routes = fs.readdirSync(__dirname +"/routes"),
+            routes = [];
 
-    Routes.forEach(function(filename){
-        routes.push(JSON.parse(fs.readFileSync(__dirname + '/routes/' + filename)));
-    });
+        Routes.forEach(function(filename){
+            routes.push(JSON.parse(fs.readFileSync(__dirname + '/routes/' + filename)));
+        });
 
-    //register configuration
-    Server.register({
-        register: require("./config.js"),
-        options: {
-            decorate: true
-        }
-    }, function(err){
-        if(err){
-            console.log("config error: ", err);
-            return next(err);
-        }
-    });
-
-    //define server connections.
-    Server.connection({
-        host: Server.config.server.host,
-        port: Server.config.server.port
-
-    });
-
-    Server.views({
-        engines: {
-            'html': {
-                module: require('handlebars'),
-                compileMode: 'sync' // engine specific
+        //register configuration
+        server.register({
+            register: require("./config.js"),
+            options: {
+                decorate: true
             }
-        },
-        path: __dirname + "/templates"
-    });
+        }, function(err){
+            if(err){
+                console.log("config error: ", err);
+                return next(err);
+            }
+        });
+
+        //define server connections.
+        server.connection({
+            host: server.config.server.host,
+            port: server.config.server.port
+
+        });
+
+        server.views({
+            engines: {
+                'html': {
+                    module: require('handlebars'),
+                    compileMode: 'sync' // engine specific
+                }
+            },
+            path: __dirname + "/templates"
+        });
 
 
-    Server.route({
-        method: ["GET", "POST"],
-        path: '/',
-        handler: function(request, reply){
-
-            reply.view('index.html');
-
-        }
-    });
-
-    Server.route({
-        method: ["GET", "POST"],
-        path: '/resource/{type}/{file}',
-        handler: function(request, reply){
-
-            var file = fs.readFileSync(__dirname + "/sources/" + request.params.type + "/" + request.params.file);
-
-            return reply(file);
-
-        }
-    });
-
-    routes.forEach(function(route){
-
-        Server.route({
-            method: route.method,
-            path: route.path,
+        server.route({
+            method: ["GET", "POST"],
+            path: '/',
             handler: function(request, reply){
 
-                reply(route.data);
+                reply.view('index.html');
 
             }
         });
 
-    });
+        server.route({
+            method: ["GET", "POST"],
+            path: '/resource/{type}/{file}',
+            handler: function(request, reply){
+
+                var file = fs.readFileSync(__dirname + "/sources/" + request.params.type + "/" + request.params.file);
+
+                return reply(file);
+
+            }
+        });
+
+        routes.forEach(function(route){
+
+            server.route({
+                method: route.method,
+                path: route.path,
+                handler: function(request, reply){
+
+                    reply(route.data);
+
+                }
+            });
+
+        });
+
+    }//constructor
 
     //start the server
-    exports.start = function(next){
+    start(){
 
-        Server.start(function(err){
+        this.server.start((err)=>{
 
-            if(err) return next(err, Server);
-            return next(null, Server);
+            if(err) return console.log("Server start error:", err);
+            return console.log("Server Started at:", this.server.info.uri)
 
         });
     };
 
     //stop the server
-    exports.stop = function(next){
+    stop(){
 
-        Server.stop({}, function(){
+        this.server.stop({}, function(){
 
-            next(null, Server);
+            console.log("Server Stopped");
 
         });
 
     };
 
-    return next(null);
 
 };
 
-module.exports = exports;
+module.exports = new Server;

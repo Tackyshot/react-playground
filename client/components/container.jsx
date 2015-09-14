@@ -1,11 +1,13 @@
-var React = require('react');
+import React from 'react';
 
 /*Controller*/
-var Container = React.createClass({
-    getInitialState: function(){
-        return {}
-    },
-    render: function(){
+class Container extends React.Component{
+
+    getInitialState() {
+        return null;
+    }
+
+    render(){
         return(
             <div className="container-fluid no-side-padding">
 
@@ -20,7 +22,7 @@ var Container = React.createClass({
         )
     }
 
-});
+}
 
-module.exports = Container;
+export default Container;
 
